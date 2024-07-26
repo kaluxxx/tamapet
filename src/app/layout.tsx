@@ -19,7 +19,7 @@ export default function RootLayout({children}: PropsWithChildren) {
         <html lang="en">
         <body>
         <Root>
-            <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+            <div className="min-h-screen bg-gray-100 text-black flex flex-col items-center">
                 <TopBar coins={1000}/>
                 {children}
                 <Navigation/>

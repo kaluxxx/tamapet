@@ -1,100 +1,63 @@
 'use client';
 
-import { useUtils } from '@telegram-apps/sdk-react';
 import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
-import {
-  Avatar,
-  Cell,
-  List,
-  Navigation,
-  Placeholder,
-  Section,
-  Text,
-  Title,
-} from '@telegram-apps/telegram-ui';
-
-import { DisplayData } from '@/components/DisplayData/DisplayData';
-
-import './styles.css';
+import {ArrowLeftIcon} from "@heroicons/react/24/outline";
+import {useRouter} from "next/navigation";
 
 export default function TONConnectPage() {
   const wallet = useTonWallet();
-  const utils = useUtils();
-
+  const router = useRouter();
   if (!wallet) {
     return (
-      <Placeholder
-        className='ton-connect-page__placeholder'
-        header='TON Connect'
-        description={
-          <>
-            <Text>
-              To display the data related to the TON Connect, it is required to connect your wallet
-            </Text>
-            <TonConnectButton className='ton-connect-page__button'/>
-          </>
-        }
-      />
+        <div className="w-full flex-1 flex flex-col items-center justify-center space-y-6 py-8 px-4">
+            <div className="relative w-full flex items-center gap-4 px-4">
+                <div className="absolute top-0 left-4 flex items-center justify-center">
+                    <button onClick={() => router.back()} className="text-black">
+                        <ArrowLeftIcon className="w-8 h-8"/>
+                    </button>
+                </div>
+                <h1 className="flex-1 text-3xl font-bold text-center text-black">
+                    TON Connect
+                </h1>
+            </div>
+            <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-center text-black font-semibold">
+                        It seems that your wallet is not connected
+                    </p>
+                    <p className="text-center text-black font-semibold">
+                        Connect your wallet to continue
+                    </p>
+                </div>
+                <TonConnectButton className='ton-connect-page__button'/>
+            </div>
+        </div>
     );
   }
 
-  const {
-    account: { chain, publicKey, address },
-    device: {
-      appName,
-      appVersion,
-      maxProtocolVersion,
-      platform,
-      features,
-    },
-  } = wallet;
-
-  return (
-    <List>
-      {'imageUrl' in wallet && (
-        <>
-          <Section>
-            <Cell
-              before={
-                <Avatar src={wallet.imageUrl} alt='Provider logo' width={60} height={60}/>
-              }
-              after={<Navigation>About wallet</Navigation>}
-              subtitle={wallet.appName}
-              onClick={(e) => {
-                e.preventDefault();
-                utils.openLink(wallet.aboutUrl);
-              }}
-            >
-              <Title level='3'>{wallet.name}</Title>
-            </Cell>
-          </Section>
-          <TonConnectButton className='ton-connect-page__button-connected'/>
-        </>
-      )}
-      <DisplayData
-        header='Account'
-        rows={[
-          { title: 'Address', value: address },
-          { title: 'Chain', value: chain },
-          { title: 'Public Key', value: publicKey },
-        ]}
-      />
-      <DisplayData
-        header='Device'
-        rows={[
-          { title: 'App Name', value: appName },
-          { title: 'App Version', value: appVersion },
-          { title: 'Max Protocol Version', value: maxProtocolVersion },
-          { title: 'Platform', value: platform },
-          {
-            title: 'Features',
-            value: features
-              .map(f => typeof f === 'object' ? f.name : undefined)
-              .filter(v => v)
-              .join(', '),
-          },
-        ]}
-      />
-    </List>
-  );
+    return (
+        <div className="w-full flex-1 flex flex-col items-center justify-center space-y-6 py-8 px-4">
+            <div className="relative w-full flex items-center gap-4 px-4">
+                <div className="absolute top-0 left-4 flex items-center justify-center">
+                    <button onClick={() => router.back()} className="text-black">
+                        <ArrowLeftIcon className="w-8 h-8"/>
+                    </button>
+                </div>
+                <h1 className="flex-1 text-3xl font-bold text-center text-black">
+                    TON Connect
+                </h1>
+            </div>
+            <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-center text-black font-semibold">
+                        Your wallet is connected
+                    </p>
+                    <p className="text-center text-black font-semibold">
+                        You can now use the wallet to interact with the app
+                    </p>
+                </div>
+                <TonConnectButton className='ton-connect-page__button'/>
+            </div>
+        </div>
+    );
 };

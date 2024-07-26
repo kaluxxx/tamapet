@@ -29,7 +29,7 @@ export default function Navigation() {
                     </Link>
                 </li>
                 <li className="flex-1">
-                    <Link href={"/"} className={`flex flex-col items-center justify-center font-bold p-2 hover:rounded-lg hover:bg-gray-300 ${pathname.includes("/quests") ? "bg-gray-200 rounded-lg" : ""}`}>
+                    <Link href={"/launch-params"} className={`flex flex-col items-center justify-center font-bold p-2 hover:rounded-lg hover:bg-gray-300 ${pathname.includes("/quests") ? "bg-gray-200 rounded-lg" : ""}`}>
                         <Image src={swordIcon} alt="sword" className="w-12 h-12"/>
                         <span className="text-black">
                             Quests
@@ -37,7 +37,7 @@ export default function Navigation() {
                     </Link>
                 </li>
                 <li className="flex-1">
-                    <Link href={"/"} className={`flex flex-col items-center justify-center font-bold p-2 hover:rounded-lg hover:bg-gray-300 ${pathname.includes("/shop") ? "bg-gray-200 rounded-lg" : ""}`}>
+                    <Link href={"/init-data"} className={`flex flex-col items-center justify-center font-bold p-2 hover:rounded-lg hover:bg-gray-300 ${pathname.includes("/shop") ? "bg-gray-200 rounded-lg" : ""}`}>
                         <Image src={cartIcon} alt="cart" className="w-12 h-12"/>
                         <span className="text-black">
                             Shop
