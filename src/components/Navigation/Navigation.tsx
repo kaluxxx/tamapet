@@ -4,8 +4,8 @@ import swordIcon from "@/app/_assets/sword.svg";
 import cartIcon from "@/app/_assets/cart.svg";
 import petIcon from "@/app/_assets/pet.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from 'next/navigation'
+import {Link} from "@/components/Link/Link";
 
 export default function Navigation() {
     const pathname = usePathname();
