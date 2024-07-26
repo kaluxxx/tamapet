@@ -6,6 +6,7 @@ import TopBar from "@/components/TopBar/TopBar";
 import egg1 from "@/app/_assets/egg-1.png";
 import {useRouter} from "next/navigation";
 import {ArrowLeftIcon} from "@heroicons/react/24/outline";
+import {parseTimeToHours} from "@/utils/dateFormat";
 
 // Définir les caractéristiques de l'œuf
 const eggCharacteristics = {
@@ -55,14 +56,6 @@ export default function EggDetail() {
     }, []);
 
     // Convertir le temps restant en heures
-    const parseTimeToHours = (time: number) => {
-        const hours = Math.floor(time / 3600);
-        const minutes = Math.floor((time % 3600) / 60);
-        const seconds = time % 60;
-
-        return `${hours}h ${minutes}m ${seconds}s`;
-    };
-
     const reduceTime = () => {
         const reductionAmount = calculateReductionAmount(eggCharacteristics.rarity, timeRemaining);
         if (coins >= cost) {
