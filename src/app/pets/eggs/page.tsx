@@ -128,7 +128,7 @@ export default function EggsList() {
                                 >
                                     <InformationCircleIcon className="w-8 h-8 self-end text-gray-500"/>
                                 </Popover>
-                                <Link href={`/eggs/${egg.id}`} className="w-full flex items-center justify-center">
+                                <Link href={`/pets/eggs/${egg.id}`} className="w-full flex items-center justify-center">
                                     <Image src={egg2} alt="egg" className="w-24 h-24" priority={true}/>
                                 </Link>
                                 <p className="text-sm text-gray-700 font-bold">Egg #{egg.id}</p>
