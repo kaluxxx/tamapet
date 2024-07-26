@@ -6,9 +6,15 @@ import petIcon from "@/app/_assets/pet.svg";
 import Image from "next/image";
 import { usePathname } from 'next/navigation'
 import {Link} from "@/components/Link/Link";
+import {usePlayer} from "@/store/usePlayer";
 
 export default function Navigation() {
     const pathname = usePathname();
+    const {player} = usePlayer();
+
+    if (!player) {
+        return null;
+    }
     return (
         <nav className="w-full sticky bottom-0 left-0 right-0 bg-white shadow-md rounded-t-2xl border border-gray-200">
             <ul className="flex justify-between items-center space-x-4 px-4 py-2">

@@ -1,43 +1,94 @@
 'use client';
-import hatchery from "@/app/_assets/hatchery.png";
-import earn from "@/app/_assets/earn.png";
-import care from "@/app/_assets/care.png";
-import Image from "next/image";
-import {Link} from "@/components/Link/Link";
+
+import {usePlayer} from "@/store/usePlayer";
+import {useRouter} from "next/navigation";
+import {useInitData} from "@telegram-apps/sdk-react";
+import {create} from "@/app/actions/players/createPlayer";
+import {useEffect, useState} from "react";
+import {get} from "@/app/actions/players/getPlayer"; // Import the get function
 
 export default function Home() {
+    const initData = useInitData();
+    const {setPlayer} = usePlayer();
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [playerExists, setPlayerExists] = useState(false);
+
+    useEffect(() => {
+        const fetchPlayer = async () => {
+            try {
+                const user = initData?.user;
+
+                if (!user) {
+                    throw new Error('Invalid user data');
+                }
+
+                const {id} = user;
+
+                if (!id) {
+                    throw new Error('Invalid user data');
+                }
+
+                const playerData = await get(id);
+                if (playerData) {
+                    setPlayer(playerData);
+                    setPlayerExists(true);
+                    router.push('/home');
+                } else {
+                    setPlayerExists(false);
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching player:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchPlayer();
+    }, [initData, router, setPlayer]);
+
+    const createPlayer = async () => {
+        try {
+            const user = initData?.user;
+
+            if (!user) {
+                throw new Error('Invalid user data');
+            }
+
+            const {id, username} = user;
+
+            if (!id || !username) {
+                throw new Error('Invalid user data');
+            }
+
+            const newPlayer = await create({
+                telegramId: id,
+                username
+            });
+
+            setPlayer(newPlayer);
+            router.push('/home');
+        } catch (error) {
+            console.error('Error creating player:', error);
+        }
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div className="flex-1 flex flex-col items-center my-4">
-            <div className="relative p-2 rounded-md">
-                <Link href={"/hatchery"}>
-                    <Image src={hatchery} alt="Hatchery" className="rounded-md h-[179.67px]"/>
-                    <div className="absolute inset-2 bg-black opacity-50 rounded-md"></div>
-                    <div className="absolute inset-2 flex flex-col items-center justify-center gap-2">
-                        <span className="text-white font-bold text-xl">Hatchery</span>
-                        <span className="text-white font-semibold text-md">Let&apos;s hatch some eggs!</span>
-                    </div>
-                </Link>
-            </div>
-            <div className="relative p-2 rounded-md">
-                <Link href={"/earn"}>
-                    <Image src={earn} alt="Earn" className="rounded-md"/>
-                    <div className="absolute inset-2 bg-black opacity-50 rounded-md"></div>
-                    <div className="absolute inset-2 flex flex-col items-center justify-center">
-                        <span className="text-white font-bold text-xl">Earn</span>
-                        <span className="text-white font-semibold text-md">Earn coins with your pets!</span>
-                    </div>
-                </Link>
-            </div>
-            <div className="relative p-2 rounded-md">
-                <Link href={"/care"}>
-                    <Image src={care} alt="Care" className="rounded-md"/>
-                    <div className="absolute inset-2 bg-black opacity-50 rounded-md"></div>
-                    <div className="absolute inset-2 flex flex-col items-center justify-center">
-                        <span className="text-white font-bold text-xl">Care</span>
-                        <span className="text-white font-semibold text-md">Take care of your pets!</span>
-                    </div>
-                </Link>
-            </div>
+        <div className="flex-1 flex flex-col items-center justify-center">
+            <span className="text-2xl font-bold text-center">Welcome to the Hatchery!</span>
+            <span className="text-lg font-semibold text-center">Your adventure just began! Click the button below to start!</span>
+            {!playerExists && (
+                <button
+                    className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700"
+                    onClick={() => createPlayer()}
+                >
+                    Start Game
+                </button>
+            )}
         </div>
-    );
+    )
 }
