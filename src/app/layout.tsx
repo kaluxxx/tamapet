@@ -20,7 +20,7 @@ export default function RootLayout({children}: PropsWithChildren) {
         <body>
         <Root>
             <div className="min-h-screen bg-gray-100 text-black flex flex-col items-center">
-                <TopBar coins={1000}/>
+                <TopBar/>
                 {children}
                 <Navigation/>
             </div>
