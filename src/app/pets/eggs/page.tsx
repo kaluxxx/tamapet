@@ -1,5 +1,3 @@
-import TopBar from "@/components/TopBar/TopBar";
-import Navigation from "@/components/Navigation/Navigation";
 import Image from "next/image";
 import egg1 from "@/app/_assets/egg-1.png";
 import egg2 from "@/app/_assets/egg-2.png";

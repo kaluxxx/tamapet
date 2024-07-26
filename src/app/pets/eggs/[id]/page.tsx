@@ -117,8 +117,6 @@ export default function EggDetail() {
     };
 
     return (
-        <div className="h-screen bg-gray-100 flex flex-col items-center">
-            <TopBar coins={coins}/>
             <div className="h-full w-full flex flex-col items-center justify-center space-y-6 py-8">
                 <div className="relative w-full flex items-center gap-4 px-4">
                     <div className="absolute top-0 left-4 flex items-center justify-center">
@@ -169,7 +167,5 @@ export default function EggDetail() {
                     )}
                 </div>
             </div>
-            <Navigation/>
-        </div>
     );
 }
