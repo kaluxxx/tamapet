@@ -20,7 +20,7 @@ Player.init({
         primaryKey: true
     },
     telegramId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false
     },
     username: {
