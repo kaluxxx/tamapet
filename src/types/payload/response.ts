@@ -1,4 +1,5 @@
 import {Player} from "@/types/entities/player";
+import Egg from "../../../models/egg";
 
 export enum ResponseCode {
     OK = 200,
@@ -17,3 +18,4 @@ export interface Response<T> {
 }
 
 export interface PlayerResponse extends Response<Player[]|Player> {}
+export interface EggResponse extends Response<Egg[]|Egg> {}

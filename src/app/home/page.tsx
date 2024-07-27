@@ -10,8 +10,10 @@ import earn from "@/app/_assets/earn.png";
 import care from "@/app/_assets/care.png";
 import chestClose from "@/app/_assets/chest-close.png";
 import chestOpen from "@/app/_assets/chest-open.png";
-import {createFirstEgg} from "@/app/actions/eggs/createFirstEgg";
-import {updatePlayer} from "@/app/actions/players/updatePlayer";
+import {eggService} from "@/services/eggService";
+import {ResponseCode} from "@/types/payload/response";
+import {playerService} from "@/services/playerService";
+import {Player} from "@/types/entities/player";
 
 export default function Home() {
     const [openModal, setOpenModal] = useState(false);
@@ -44,27 +46,25 @@ export default function Home() {
             if (!player || player.hasMintFirstEgg) {
                 return;
             }
-            const egg = await createFirstEgg(player.id);
+            const eggResponse = await eggService.createFirstEgg(player.id);
 
-            const updatedPlayer = await updatePlayer({
-                    ...player,
-                    hasMintFirstEgg: true
-                }
-            );
+            if (eggResponse.code !== ResponseCode.CREATED) {
+                throw new Error('Error creating first egg');
+            }
 
-            setPlayer(updatedPlayer);
+            const playerResponse = await playerService.update(player.id, { ...player, hasMintFirstEgg: true });
 
-            router.push('/hatchery');
+            if (playerResponse.code === ResponseCode.OK) {
+                const updatedPlayer = playerResponse.data as Player
+                setPlayer(updatedPlayer);
+                router.push('/hatchery');
+            }
         }
 
         if (isChestOpen) {
             mintFirstEgg();
         }
     }, [isChestOpen, player, router, setPlayer]);
-
-    useEffect(() => {
-        console.log("player", player);
-    }, [player]);
 
     const modalContent = (
         <div className="flex flex-col gap-4">

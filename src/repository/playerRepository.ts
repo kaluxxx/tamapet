@@ -9,10 +9,10 @@ export const playerRepository = {
             throw error;
         }
     },
-    update: async (playerDTO: PlayerDTO): Promise<Player> => {
+    update: async (id: number, playerDTO: PlayerDTO): Promise<Player> => {
         try {
             const player = await Player.findOne({
-                where: {telegramId: playerDTO.telegramId},
+                where: {id: id},
                 include: [{
                     model: Egg,
                     as: 'eggs'
@@ -29,7 +29,7 @@ export const playerRepository = {
             throw error;
         }
     },
-    findById: async (id: number): Promise<Player | null> => {
+    findByTelegramId: async (id: number): Promise<Player | null> => {
         try {
             return await Player.findOne({
                 where: {telegramId: id},

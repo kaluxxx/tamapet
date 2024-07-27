@@ -147,7 +147,7 @@ export default function EggDetail() {
                         </div>
                     </div>
                     <p className="text-lg text-center text-gray-700 mt-4">
-                        {eggHatched ? "Your egg has hatched!" : `Time remaining: ${parseTimeToHours(timeRemaining)}`}
+                        {eggHatched ? "Your eggs has hatched!" : `Time remaining: ${parseTimeToHours(timeRemaining)}`}
                     </p>
                     {!startHatchCountdown && !eggHatched && (
                         <button

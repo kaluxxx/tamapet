@@ -35,8 +35,6 @@ const sendRequest = async <T>(
         options.body = body ? JSON.stringify(body) : undefined;
     }
 
-    console.log('options', options);
-
     const response = await fetch(url, updateOptions(options));
 
     if (!response.ok) {
@@ -53,10 +51,11 @@ const sendRequest = async <T>(
         };
     }
 
-    const data = (await response.json()) as T;
+    const {data, message} = (await response.json())
+
     return {
-        data: data ? data : undefined,
-        message: response.statusText,
+        data: data as T,
+        message,
         code: response.status,
     };
 };

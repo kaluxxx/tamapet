@@ -12,11 +12,11 @@ export const eggRepository = {
                 rarityId: rarity.id,
                 playerId,
                 hatchTime: 1800,
-                image: 'egg-1.png',
+                image: 'eggs-1.png',
                 createdAt: new Date(),
             });
         } catch (error) {
-            console.error('Error creating first egg:', error);
+            console.error('Error creating first eggs:', error);
             throw error;
         }
     }

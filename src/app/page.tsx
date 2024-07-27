@@ -4,9 +4,7 @@ import {usePlayer} from "@/store/usePlayer";
 import {useRouter} from "next/navigation";
 import {useInitData} from "@telegram-apps/sdk-react";
 import {useEffect, useState} from "react";
-import {getPlayer} from "@/app/actions/players/getPlayer";
 import Loader from "@/components/Loader/Loader";
-import {createPlayer} from "@/app/actions/players/createPlayer";
 import {playerService} from "@/services/playerService";
 import {ResponseCode} from "@/types/payload/response";
 import {Player} from "@/types/entities/player"; // Import the get function
