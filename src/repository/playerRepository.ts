@@ -3,10 +3,8 @@ import {Egg, Player} from "../../models/associations";
 export const playerRepository = {
     create: async (playerDTO: PlayerDTO): Promise<Player> => {
         try {
-            alert('Creating player: ' + JSON.stringify(playerDTO));
             return await Player.create(playerDTO)
         } catch (error) {
-            alert('Error creating player: ' + error);
             console.error('Error creating player:', error);
             throw error;
         }
@@ -31,7 +29,7 @@ export const playerRepository = {
             throw error;
         }
     },
-    get: async (id: number): Promise<Player | null> => {
+    findById: async (id: number): Promise<Player | null> => {
         try {
             return await Player.findOne({
                 where: {telegramId: id},

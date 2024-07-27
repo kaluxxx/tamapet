@@ -6,7 +6,10 @@ import {useInitData} from "@telegram-apps/sdk-react";
 import {useEffect, useState} from "react";
 import {getPlayer} from "@/app/actions/players/getPlayer";
 import Loader from "@/components/Loader/Loader";
-import {createPlayer} from "@/app/actions/players/createPlayer"; // Import the get function
+import {createPlayer} from "@/app/actions/players/createPlayer";
+import {playerService} from "@/services/playerService";
+import {ResponseCode} from "@/types/payload/response";
+import {Player} from "@/types/entities/player"; // Import the get function
 
 export default function Home() {
     const initData = useInitData();
@@ -30,8 +33,10 @@ export default function Home() {
                     throw new Error('Invalid user data');
                 }
 
-                const playerData = await getPlayer(id);
-                if (playerData) {
+                const response = await playerService.get(id);
+
+                if (response.code === ResponseCode.OK) {
+                    const playerData = response.data as Player;
                     setPlayer(playerData);
                     setPlayerExists(true);
                     router.push('/home');
@@ -62,13 +67,16 @@ export default function Home() {
                 throw new Error('Invalid user data');
             }
 
-            const newPlayer = await createPlayer({
+            const response= await playerService.create({
                 telegramId: id,
-                username
+                username,
             });
 
-            setPlayer(newPlayer);
-            router.push('/home');
+            if (response.code === ResponseCode.CREATED) {
+                const newPlayer = response.data as Player;
+                setPlayer(newPlayer);
+                router.push('/home');
+            }
         } catch (error) {
             console.error('Error creating player:', error);
         }
