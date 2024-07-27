@@ -6,6 +6,7 @@ export const playerRepository = {
             alert('Creating player: ' + JSON.stringify(playerDTO));
             return await Player.create(playerDTO)
         } catch (error) {
+            alert('Error creating player: ' + error);
             console.error('Error creating player:', error);
             throw error;
         }
