@@ -1,8 +1,8 @@
-import { RequestParams } from "@/types/payload/requestParams";
-import { Response } from "@/types/payload/response";
+import {RequestParams} from "@/types/payload/requestParams";
+import {Response} from "@/types/payload/response";
 
 const updateOptions = (options: RequestInit): RequestInit => {
-    const updatedOptions = { ...options };
+    const updatedOptions = {...options};
     const token = localStorage.getItem("token");
     if (token) {
         updatedOptions.headers = {
@@ -13,11 +13,13 @@ const updateOptions = (options: RequestInit): RequestInit => {
     return updatedOptions;
 };
 
-const sendRequest = async <T>({
-                                  url,
-                                  method,
-                                  body,
-                              }: RequestParams): Promise<Response<T>> => {
+const sendRequest = async <T>(
+    {
+        url,
+        method,
+        body,
+    }: RequestParams
+): Promise<Response<T>> => {
     const options: RequestInit = {
         method,
         headers: {},
@@ -32,6 +34,8 @@ const sendRequest = async <T>({
         };
         options.body = body ? JSON.stringify(body) : undefined;
     }
+
+    console.log('options', options);
 
     const response = await fetch(url, updateOptions(options));
 
@@ -59,13 +63,13 @@ const sendRequest = async <T>({
 
 const httpRequest = {
     post: <T>(params: RequestParams): Promise<Response<T>> =>
-        sendRequest<T>({ ...params, method: "POST" }),
+        sendRequest<T>({...params, method: "POST"}),
     get: <T>(params: RequestParams): Promise<Response<T>> =>
-        sendRequest<T>({ ...params, method: "GET" }),
+        sendRequest<T>({...params, method: "GET"}),
     put: <T>(params: RequestParams): Promise<Response<T>> =>
-        sendRequest<T>({ ...params, method: "PUT" }),
+        sendRequest<T>({...params, method: "PUT"}),
     delete: <T>(params: RequestParams): Promise<Response<T>> =>
-        sendRequest<T>({ ...params, method: "DELETE" }),
+        sendRequest<T>({...params, method: "DELETE"}),
 };
 
 export default httpRequest;
