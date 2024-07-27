@@ -72,7 +72,7 @@ module.exports = {
                 autoIncrement: true
             },
             telegramId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT,
                 allowNull: false
             },
             username: {
