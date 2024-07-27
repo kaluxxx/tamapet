@@ -1,6 +1,5 @@
-import {DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
-import DbConnexion from "@/db/dbConnexion";
-
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
+import DbConnexion from "../db/dbConnexion";
 
 const sequelize = DbConnexion.getInstance().getSequelize();
 
@@ -8,9 +7,10 @@ class Player extends Model<InferAttributes<Player>, InferCreationAttributes<Play
     declare id: CreationOptional<number>;
     declare telegramId: number;
     declare username: string;
-    declare coins: CreationOptional<number>
-    declare createdAt: CreationOptional<Date>
-    declare updatedAt: CreationOptional<Date>
+    declare coins: CreationOptional<number>;
+    declare hasMintFirstEgg: CreationOptional<boolean>;
+    declare createdAt: CreationOptional<Date>;
+    declare updatedAt: CreationOptional<Date>;
 }
 
 Player.init({
@@ -32,6 +32,11 @@ Player.init({
         allowNull: false,
         defaultValue: 2000
     },
+    hasMintFirstEgg: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -47,9 +52,6 @@ Player.init({
     modelName: 'Player',
     tableName: 'players',
     timestamps: true,
-    underscored: true
 });
-
-
 
 export default Player;

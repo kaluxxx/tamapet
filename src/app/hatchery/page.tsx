@@ -1,9 +1,11 @@
 'use client';
 import {useRouter} from 'next/navigation';
-import {ArrowLeftIcon, ArrowRightIcon, PlusIcon} from '@heroicons/react/24/outline';
+import {ArrowLeftIcon, PlusIcon} from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import egg1 from '@/app/_assets/egg-1.png'; // Assurez-vous que ces chemins sont corrects
 import egg2 from '@/app/_assets/egg-2.png';
+import {usePlayer} from "@/store/usePlayer";
+import {useEffect} from "react";
 
 const hatchery = {
     size: 2,
@@ -31,6 +33,11 @@ const hatchery = {
 
 export default function Hatchery() {
     const router = useRouter();
+    const {player} = usePlayer();
+
+    useEffect(() => {
+        console.log("player", player);
+    }, [player]);
 
     return (
         <div className="flex-1 w-full flex flex-col items-center my-4 px-4">

@@ -3,9 +3,10 @@
 import {usePlayer} from "@/store/usePlayer";
 import {useRouter} from "next/navigation";
 import {useInitData} from "@telegram-apps/sdk-react";
-import {create} from "@/app/actions/players/createPlayer";
 import {useEffect, useState} from "react";
-import {get} from "@/app/actions/players/getPlayer"; // Import the get function
+import {getPlayer} from "@/app/actions/players/getPlayer";
+import Loader from "@/components/Loader/Loader";
+import {createPlayer} from "@/app/actions/players/createPlayer"; // Import the get function
 
 export default function Home() {
     const initData = useInitData();
@@ -29,7 +30,7 @@ export default function Home() {
                     throw new Error('Invalid user data');
                 }
 
-                const playerData = await get(id);
+                const playerData = await getPlayer(id);
                 if (playerData) {
                     setPlayer(playerData);
                     setPlayerExists(true);
@@ -47,7 +48,7 @@ export default function Home() {
         fetchPlayer();
     }, [initData, router, setPlayer]);
 
-    const createPlayer = async () => {
+    const initPlayer = async () => {
         try {
             const user = initData?.user;
 
@@ -61,7 +62,7 @@ export default function Home() {
                 throw new Error('Invalid user data');
             }
 
-            const newPlayer = await create({
+            const newPlayer = await createPlayer({
                 telegramId: id,
                 username
             });
@@ -74,7 +75,9 @@ export default function Home() {
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <Loader/>
+        )
     }
 
     return (
@@ -84,7 +87,7 @@ export default function Home() {
             {!playerExists && (
                 <button
                     className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700"
-                    onClick={() => createPlayer()}
+                    onClick={() => initPlayer()}
                 >
                     Start Game
                 </button>

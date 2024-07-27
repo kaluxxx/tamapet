@@ -1,7 +1,6 @@
 'use client';
 import coinIcon from "@/app/_assets/coin.svg";
 import walletIcon from "@/app/_assets/wallet.svg";
-import bagIcon from "@/app/_assets/bag.svg";
 import Image from "next/image";
 import {Link} from "@/components/Link/Link";
 import {usePlayer} from "@/store/usePlayer";
