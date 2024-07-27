@@ -1,2 +1,2 @@
-const BASE_URL = 'https://tamapet.vercel.app/api';
+const BASE_URL = '/api';
 export const PLAYER_ENDPOINT = `${BASE_URL}/players`;
