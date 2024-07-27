@@ -3,6 +3,7 @@ import {Egg, Player} from "../../models/associations";
 export const playerRepository = {
     create: async (playerDTO: PlayerDTO): Promise<Player> => {
         try {
+            alert('Creating player: ' + JSON.stringify(playerDTO));
             return await Player.create(playerDTO)
         } catch (error) {
             console.error('Error creating player:', error);
