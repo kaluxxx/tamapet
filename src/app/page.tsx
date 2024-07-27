@@ -53,12 +53,14 @@ export default function Home() {
             const user = initData?.user;
 
             if (!user) {
+                alert('Invalid user data');
                 throw new Error('Invalid user data');
             }
 
             const {id, username} = user;
 
             if (!id || !username) {
+                alert('Invalid user data : id or username is missing');
                 throw new Error('Invalid user data');
             }
 
@@ -70,6 +72,7 @@ export default function Home() {
             setPlayer(newPlayer);
             router.push('/home');
         } catch (error) {
+            alert('Error creating player');
             console.error('Error creating player:', error);
         }
     }
